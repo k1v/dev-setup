@@ -15,33 +15,19 @@ Sets up: shell (zsh + Oh My Zsh + Powerlevel10k), dotfiles, modern CLI tools, ru
 
 ### Usage
 
-#### Fresh distro — one command
-
-The `00-ssh-github.sh` script handles everything on a brand new machine: installs git, clones this repo, and runs the full bootstrap. It will also offer to set up an SSH key for GitHub (useful if you want to push commits or access private repos from WSL — skippable if you just want to get set up). Only `curl` is needed (pre-installed in all Ubuntu/Debian distros):
+Only `curl` is needed (pre-installed in all Ubuntu/Debian distros):
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/k1v/dev-setup/main/wsl/scripts/00-ssh-github.sh)
 ```
 
-To also install DevOps tools, pass the flag through:
+This installs git, optionally sets up an SSH key for GitHub, clones this repo, and runs the full bootstrap. Safe to re-run — already-completed steps are skipped.
 
 ```bash
+# Also install DevOps tools (kubectl, helm, terraform, azure-cli)
 bash <(curl -fsSL https://raw.githubusercontent.com/k1v/dev-setup/main/wsl/scripts/00-ssh-github.sh) --devops
-```
 
-#### Already have SSH set up?
-
-If your SSH key is already registered with GitHub (e.g. re-running on an existing machine):
-
-```bash
-mkdir -p ~/repos
-git clone git@github.com:k1v/dev-setup.git ~/repos/dev-setup
-bash ~/repos/dev-setup/wsl/bootstrap.sh
-
-# Or with DevOps tools
-bash ~/repos/dev-setup/wsl/bootstrap.sh --devops
-
-# Or re-run a single step
+# Re-run a single bootstrap step manually
 bash ~/repos/dev-setup/wsl/bootstrap.sh --step 02
 ```
 
