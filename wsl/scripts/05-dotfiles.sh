@@ -58,8 +58,10 @@ symlink_file() {
 # ---------------------------------------------------------------------------
 symlink_file ".zshrc"     ".zshrc"
 symlink_file ".p10k.zsh"  ".p10k.zsh"
-symlink_file ".gitconfig" ".gitconfig"
 symlink_file ".aliases"   ".aliases"
+
+# Note: .gitconfig is NOT symlinked to avoid accidental credential commits.
+# Git user identity is configured via `git config` commands below instead.
 
 ok "Dotfiles symlinked."
 
@@ -117,7 +119,7 @@ fi
 # Show a summary of what HOME now points to
 echo ""
 info "Current symlink state:"
-for f in .zshrc .p10k.zsh .gitconfig .aliases; do
+for f in .zshrc .p10k.zsh .aliases; do
   if [[ -L "$HOME/$f" ]]; then
     echo "  $f  →  $(readlink "$HOME/$f")"
   fi
