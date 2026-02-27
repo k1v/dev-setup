@@ -111,7 +111,9 @@ fi
 run_script "01-packages.sh"
 run_script "02-zsh.sh"
 run_script "03-fonts.sh"
-run_script "04-runtimes.sh"
+# Runtimes: run with error tolerance — a failed Python build should not
+# abort the rest of the setup (dotfiles, devops)
+run_script "04-runtimes.sh" || log_step "WARNING: runtimes step had errors — continuing"
 run_script "05-dotfiles.sh"
 
 if [[ "$DEVOPS" == true ]]; then
@@ -126,5 +128,5 @@ echo -e "  ${BOLD}Next steps:${RESET}"
 echo "  1. Restart your terminal (or run: exec zsh)"
 echo "  2. On first zsh launch, Powerlevel10k will run its config wizard"
 echo "     (or run: p10k configure)"
-echo "  3. In Windows Terminal, set the font to: JetBrainsMono Nerd Font"
+  echo "  3. In Windows Terminal, set the font to: MesloLGL Nerd Font"
 echo ""

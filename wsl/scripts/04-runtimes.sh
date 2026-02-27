@@ -61,16 +61,27 @@ if command -v pyenv &>/dev/null; then
   eval "$(pyenv init -)"
 fi
 
-# Install latest stable Python if none installed yet
+# Install latest stable Python 3.13.x if none installed yet
+# We pin to 3.13.x (not the absolute latest) to avoid bleeding-edge
+# releases that may have build issues (e.g. 3.14.x pip bootstrap bug)
 if ! pyenv versions --bare 2>/dev/null | grep -qE "^[0-9]"; then
-  info "Installing latest stable Python via pyenv..."
+  info "Installing latest stable Python 3.13.x via pyenv..."
   LATEST_PYTHON=$(pyenv install --list \
-    | grep -E '^\s+[0-9]+\.[0-9]+\.[0-9]+$' \
+    | grep -E '^\s+3\.13\.[0-9]+$' \
     | tail -1 \
     | tr -d ' ')
-  pyenv install "$LATEST_PYTHON"
-  pyenv global "$LATEST_PYTHON"
-  ok "Python $LATEST_PYTHON installed and set as global"
+  if [[ -z "$LATEST_PYTHON" ]]; then
+    echo -e "\033[1;33m[runtimes] Could not find Python 3.13.x in pyenv list — skipping Python install\033[0m"
+    echo "           Run manually later: pyenv install 3.13.x && pyenv global 3.13.x"
+  else
+    if pyenv install "$LATEST_PYTHON"; then
+      pyenv global "$LATEST_PYTHON"
+      ok "Python $LATEST_PYTHON installed and set as global"
+    else
+      echo -e "\033[1;33m[runtimes] Python $LATEST_PYTHON build failed — skipping\033[0m"
+      echo "           Run manually later: pyenv install $LATEST_PYTHON && pyenv global $LATEST_PYTHON"
+    fi
+  fi
 else
   CURRENT=$(pyenv version-name 2>/dev/null || echo "unknown")
   ok "Python already installed ($CURRENT) — skipping"
