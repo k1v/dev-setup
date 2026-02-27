@@ -34,6 +34,10 @@ source "$ZSH/oh-my-zsh.sh"
 # Local bin (fd/bat shims live here)
 export PATH="$HOME/.local/bin:$PATH"
 
+# Prepend Linux tool dirs before Windows interop paths so Linux binaries
+# always win over any Windows versions of the same tool (node, python, etc.)
+export PATH="$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
@@ -45,6 +49,16 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]]            && source "$NVM_DIR/nvm.sh"
 [[ -s "$NVM_DIR/bash_completion" ]]   && source "$NVM_DIR/bash_completion"
+
+# ------------------------------------------------------------------------------
+# WSL: ensure Linux tools take precedence over Windows equivalents
+# ------------------------------------------------------------------------------
+# Remove Windows node/npm/python from PATH to avoid cross-OS conflicts.
+# nvm and pyenv (loaded above) provide the correct Linux binaries instead.
+if [[ -n "${WSL_DISTRO_NAME:-}" ]]; then
+  PATH="$(echo "$PATH" | tr ':' '\n' | grep -v '/mnt/c/' | tr '\n' ':' | sed 's/:$//')"
+  export PATH
+fi
 
 # ------------------------------------------------------------------------------
 # Load aliases
