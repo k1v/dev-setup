@@ -1,0 +1,133 @@
+# ==============================================================================
+# .aliases — Shell aliases
+# Managed by: https://github.com/k1v/dev-setup
+# Sourced from .zshrc
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Navigation
+# ------------------------------------------------------------------------------
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias ~='cd ~'
+alias -- -='cd -'              # go back to previous directory
+
+# ------------------------------------------------------------------------------
+# ls → eza (modern replacement)
+# Falls back to plain ls if eza is not installed
+# ------------------------------------------------------------------------------
+if command -v eza &>/dev/null; then
+  alias ls='eza --group-directories-first --icons'
+  alias ll='eza -lhF --group-directories-first --icons --git'
+  alias la='eza -lahF --group-directories-first --icons --git'
+  alias lt='eza --tree --level=2 --icons'
+  alias lta='eza --tree --level=2 --icons -a'
+else
+  alias ls='ls --color=auto --group-directories-first'
+  alias ll='ls -lhF'
+  alias la='ls -lahF'
+fi
+
+# ------------------------------------------------------------------------------
+# cat → bat (syntax highlighting)
+# ------------------------------------------------------------------------------
+if command -v bat &>/dev/null; then
+  alias cat='bat --paging=never'
+  alias batp='bat --paging=always'
+elif command -v batcat &>/dev/null; then
+  alias cat='batcat --paging=never'
+  alias batp='batcat --paging=always'
+fi
+
+# ------------------------------------------------------------------------------
+# grep → ripgrep
+# ------------------------------------------------------------------------------
+if command -v rg &>/dev/null; then
+  alias grep='rg'
+fi
+
+# ------------------------------------------------------------------------------
+# Disk / system
+# ------------------------------------------------------------------------------
+alias df='df -hT'
+alias du='du -sh'
+alias free='free -h'
+alias top='htop'
+alias psg='ps aux | grep -v grep | grep -i'
+
+# ------------------------------------------------------------------------------
+# Networking
+# ------------------------------------------------------------------------------
+alias myip='curl -s https://ifconfig.me && echo'
+alias ports='ss -tulpn'
+
+# ------------------------------------------------------------------------------
+# Safety rails
+# ------------------------------------------------------------------------------
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias mkdir='mkdir -pv'
+
+# ------------------------------------------------------------------------------
+# Git shortcuts (complementing the gitconfig aliases)
+# ------------------------------------------------------------------------------
+alias g='git'
+alias ga='git add'
+alias gaa='git add -A'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gca='git commit --amend --no-edit'
+alias gco='git checkout'
+alias gcob='git checkout -b'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gf='git fetch --prune'
+alias gl='git lg'               # pretty log (defined in .gitconfig)
+alias gpl='git pull'
+alias gps='git push'
+alias gst='git st'              # short status
+alias gsw='git switch'
+alias gswc='git switch -c'
+
+# ------------------------------------------------------------------------------
+# Docker
+# ------------------------------------------------------------------------------
+alias d='docker'
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias dimg='docker images'
+alias dex='docker exec -it'
+alias dlog='docker logs -f'
+alias dprune='docker system prune -af'
+
+# ------------------------------------------------------------------------------
+# Kubernetes
+# ------------------------------------------------------------------------------
+if command -v kubectl &>/dev/null; then
+  alias k='kubectl'
+  alias kgp='kubectl get pods'
+  alias kgs='kubectl get svc'
+  alias kgn='kubectl get nodes'
+  alias kd='kubectl describe'
+  alias kl='kubectl logs -f'
+  alias kex='kubectl exec -it'
+  alias kctx='kubectl config use-context'
+  alias kns='kubectl config set-context --current --namespace'
+fi
+
+# ------------------------------------------------------------------------------
+# Dev environment
+# ------------------------------------------------------------------------------
+alias py='python'
+alias pip='pip3'
+alias serve='python -m http.server 8000'   # quick local HTTP server
+
+# Reload zsh config
+alias reload='source ~/.zshrc && echo "zsh reloaded"'
+
+# Edit dotfiles quickly
+alias zshrc='$EDITOR ~/.zshrc'
+alias aliases='$EDITOR ~/.aliases'
+alias p10krc='$EDITOR ~/.p10k.zsh'

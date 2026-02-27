@@ -1,0 +1,71 @@
+# ==============================================================================
+# .gitconfig
+# Managed by: https://github.com/k1v/dev-setup
+# ==============================================================================
+
+[user]
+  # name and email are set during bootstrap (see wsl/scripts/05-dotfiles.sh)
+  # To update: git config --global user.name "Your Name"
+  #            git config --global user.email "you@example.com"
+
+[core]
+  editor     = vim
+  autocrlf   = input     # WSL: normalize line endings to LF on commit
+  whitespace = fix        # detect trailing whitespace
+  pager      = less -FRX
+
+[init]
+  defaultBranch = main
+
+[pull]
+  rebase = false          # merge by default; change to 'true' to always rebase
+
+[push]
+  autoSetupRemote = true  # auto-track remote branch on first push (git >= 2.37)
+
+[fetch]
+  prune = true            # remove deleted remote branches on fetch
+
+[merge]
+  conflictstyle = diff3   # show base in conflict markers (easier to resolve)
+
+[diff]
+  colorMoved = zebra      # highlight moved lines differently
+
+[rebase]
+  autoStash  = true       # auto stash/pop dirty changes around a rebase
+  autoSquash = true       # auto apply fixup!/squash! commits
+
+[log]
+  date = iso              # human-readable dates in git log
+
+[alias]
+  # Short status
+  st  = status -sb
+
+  # Pretty log
+  lg  = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(auto)%d%Creset %s %C(dim)(%cr) %C(blue)<%an>%Creset' --abbrev-commit
+
+  # List branches by latest commit
+  br  = branch --sort=-committerdate --format='%(committerdate:relative)%09%(refname:short)'
+
+  # Undo last commit (keep changes staged)
+  undo = reset --soft HEAD~1
+
+  # Interactive add
+  ai  = add -i
+
+  # Show files changed in last commit
+  last = diff HEAD~1..HEAD --name-only
+
+  # Amend without editing commit message
+  amend = commit --amend --no-edit
+
+  # Clean up merged local branches
+  cleanup = !git branch --merged | grep -v '\\*\\|main\\|master\\|develop' | xargs -n 1 git branch -d
+
+[color]
+  ui = auto
+
+[credential]
+  helper = /usr/lib/git-core/git-credential-libsecret

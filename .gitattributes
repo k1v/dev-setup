@@ -1,0 +1,21 @@
+# Enforce LF line endings for all shell scripts and dotfiles
+# regardless of the OS they are committed from
+
+* text=auto
+
+# Shell scripts — always LF
+*.sh text eol=lf
+
+# Dotfiles — always LF
+.aliases text eol=lf
+.zshrc text eol=lf
+.p10k.zsh text eol=lf
+.gitconfig text eol=lf
+
+# Markdown — LF
+*.md text eol=lf
+
+# Windows-specific files — CRLF (for future windows/ directory)
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
