@@ -20,13 +20,13 @@ Sets up: shell (zsh + Oh My Zsh + Powerlevel10k), dotfiles, modern CLI tools, ru
 The `00-ssh-github.sh` script handles everything on a brand new machine: installs git, generates an SSH key, walks you through adding it to GitHub, verifies the connection, clones this repo, and runs the full bootstrap. Only `curl` is needed (pre-installed in all Ubuntu/Debian distros):
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/k1v/dev-setup/master/wsl/scripts/00-ssh-github.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/k1v/dev-setup/main/wsl/scripts/00-ssh-github.sh)
 ```
 
 To also install DevOps tools, pass the flag through:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/k1v/dev-setup/master/wsl/scripts/00-ssh-github.sh) --devops
+bash <(curl -fsSL https://raw.githubusercontent.com/k1v/dev-setup/main/wsl/scripts/00-ssh-github.sh) --devops
 ```
 
 #### Already have SSH set up?
