@@ -17,7 +17,7 @@ Sets up: shell (zsh + Oh My Zsh + Powerlevel10k), dotfiles, modern CLI tools, ru
 
 #### Fresh distro — one command
 
-The `00-ssh-github.sh` script handles everything on a brand new machine: installs git, generates an SSH key, walks you through adding it to GitHub, verifies the connection, clones this repo, and runs the full bootstrap. Only `curl` is needed (pre-installed in all Ubuntu/Debian distros):
+The `00-ssh-github.sh` script handles everything on a brand new machine: installs git, clones this repo, and runs the full bootstrap. It will also offer to set up an SSH key for GitHub (useful if you want to push commits or access private repos from WSL — skippable if you just want to get set up). Only `curl` is needed (pre-installed in all Ubuntu/Debian distros):
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/k1v/dev-setup/main/wsl/scripts/00-ssh-github.sh)
