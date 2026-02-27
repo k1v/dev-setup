@@ -108,10 +108,11 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# 5. Clone dev-setup and run bootstrap
+# 5. Clone dev-setup (or pull latest if already cloned)
 # ---------------------------------------------------------------------------
-if [[ -d "$REPO_CLONE_DIR" ]]; then
-  ok "Repo already cloned at $REPO_CLONE_DIR — skipping clone"
+if [[ -d "$REPO_CLONE_DIR/.git" ]]; then
+  ok "Repo already cloned — pulling latest changes..."
+  git -C "$REPO_CLONE_DIR" pull
 else
   info "Cloning dev-setup repo..."
   mkdir -p "$HOME/repos"
